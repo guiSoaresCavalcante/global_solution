@@ -1,0 +1,31 @@
+trigger:
+- global_projeto
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  maven.version: '3.8.7'
+  java.version: '17'
+  azureSubscription: 'Azure for Students (40e8f6d0-3344-46b2-b963-30ae2661fbae)'
+  appName: 'java-app-fiap'
+
+steps:
+
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenVersion: $(maven.version)
+    goals: 'package'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/target'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
