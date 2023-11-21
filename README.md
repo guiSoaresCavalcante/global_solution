@@ -1,2 +1,97 @@
-# global_solution
-Repository for our global solution
+# HealthHub
+
+## Introdução
+
+* Bem-vindo ao HealthHub, seu parceiro dedicado para uma vida saudável e consciente!
+* Revolucionamos a gestão da saúde com uma plataforma intuitiva e personalizada.
+
+## Principais Características
+
+1. **Registro Simples:**
+   Sua jornada para o bem-estar começa com o fácil registro de informações essenciais.
+2. **Personalização:**
+   Dados cruciais, como peso, altura, hábitos de saúde, alimentação e sono, são usados para personalizar sua experiência.
+3. **Sugestões Personalizadas:**
+   Oferecemos sugestões do calendário de saúde governamental, alinhadas com suas características individuais.
+4. **Esclarecimento de Dúvidas:**
+   No futuro, queremos colocar uma aba exclusiva que irá permitir esclarecer dúvidas com o GPT, incluindo recomendações médicas personalizadas.
+5. **Atualizações Mensais:**
+   Posteriormente queremos implementar as atualizações mensais do Ministério da Saúde, abordando conscientização e prevenção de doenças.
+
+## Objetivo do App
+
+* Simplificar a gestão da saúde, proporcionando orientações personalizadas e informações relevantes.
+* Compromisso em promover um estilo de vida saudável e consciente.
+* Viva melhor, sinta-se melhor, seja melhor. Bem-vindo ao HealthHub, onde sua saúde está no centro de tudo que fazemos.
+
+
+**Testar a aplicação em nuvem (Swagger)**
+
+[Link do Swagger da aplicação](https://spring-fiap.azurewebsites.net/swagger-ui/index.html)
+
+
+- abaixo algumas fotos realizando um solicitação HTTP do tipo **POST** & **GET**.
+
+![alt text](./imgs/2.png)
+![alt text](./imgs/1.png)
+![alt text](./imgs/3.png)
+![alt text](./imgs/4.png)
+![alt text](./imgs/5.png)
+![alt text](./imgs/6.png)
+
+- Um exemplo de json utilizado nos testes
+  
+```
+Cadastrar Usuário
+{
+  "nome": "Alberto",
+  "email": "alberto@gmail.com",
+  "senha": "s0LY037PUwn2"
+}
+
+Atualizar Usuário
+{
+  "id": 0,
+  "nome": "Alberto",
+  "email": "alberto@gmail.com",
+}
+
+
+Login Usuário
+{
+  "nome": "Alberto",
+  "email": "alberto@gmail.com",
+  "senha": "s0LY037PUwn2"
+}
+
+
+Cadastar Atualização Saúde
+
+{
+  "titulo": "Janeiro Branco - sinal de alerta para a saúde mental ",
+  "descricao": "Janeiro é o mês dedicado à conscientização a respeito da saúde mental, cada vez mais reconhecida como uma prioridade global de saúde e desenvolvimento econômico.",
+  "dtInfoSaude": "2024-01-01"
+}
+
+Update Atualização Saúde
+
+{
+  "id": 2,
+  "titulo": "Outubro Rosa: campanha de saúde sobre o câncer de mama",
+  "descricao": "Com a chegada do mês de outubro, tem início mais uma edição da campanha Outubro Rosa, que tem o objetivo de conscientizar à prevenção, diagnóstico precoce do câncer de mama. ",
+  "dtInfoSaude": "2024-10-01"
+}
+
+```
+#### Docker
+
+- Vai compilar seu código e também empacotá-lo e criará um jar utilizado no dockerfile.
+```
+mvn clean package
+
+```
+- Atalho Docker Compose, executando um "stop", caso tenha feito um "start" anterior & mostrando nome e porta que esta rodando.
+```
+sudo docker-compose down && sudo docker-compose up -d --build && sudo docker-compose ps
+
+```
