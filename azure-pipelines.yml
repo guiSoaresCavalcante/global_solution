@@ -8,7 +8,7 @@ variables:
   maven.version: '3.8.7'
   java.version: '17'
   azureSubscription: 'Azure for Students (40e8f6d0-3344-46b2-b963-30ae2661fbae)'
-  appName: 'java-app-fiap'
+  appName: 'spring-fiap'
 
 steps:
 
