@@ -1,6 +1,6 @@
 # HealthHub
 
-### Introdução
+## Introdução
 
 * Bem-vindo ao HealthHub, seu parceiro dedicado para uma vida saudável e consciente!
 * Revolucionamos a gestão da saúde com uma plataforma intuitiva e personalizada.
