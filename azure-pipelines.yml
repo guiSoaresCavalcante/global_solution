@@ -1,5 +1,5 @@
 trigger:
-- global_projeto
+- main
 
 pool:
   vmImage: 'ubuntu-latest'
