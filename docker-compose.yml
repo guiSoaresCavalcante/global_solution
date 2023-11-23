@@ -1,0 +1,17 @@
+version: '3'
+services:
+  springboot-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 2048M
+        reservations:
+          cpus: '0.50'
+          memory: 1042M
+    ports:
+      - "8080:8080" 
