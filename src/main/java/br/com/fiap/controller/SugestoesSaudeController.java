@@ -2,6 +2,8 @@ package br.com.fiap.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,11 +27,10 @@ public class SugestoesSaudeController {
 	public SugestoesSaudeController(SugestoesSaudeService sugestoesSaudeService) {
 		this.sugestoesSaudeService = sugestoesSaudeService;
 	}
-
+	
 	@GetMapping
-	public ResponseEntity<List<SugestoesSaudeDto>> getAllSugestoesSaude() {
-		List<SugestoesSaudeDto> sugestoesSaudeList = sugestoesSaudeService.getAllSugestoesSaude();
-		return ResponseEntity.ok(sugestoesSaudeList);
+	public ResponseEntity<Page<SugestoesSaudeDto>> getAllSugestoesSaude(Pageable pageable) {
+		return ResponseEntity.ok(sugestoesSaudeService.getAllSugestoesSaude(pageable));
 	}
 
 	@GetMapping("/{id}")

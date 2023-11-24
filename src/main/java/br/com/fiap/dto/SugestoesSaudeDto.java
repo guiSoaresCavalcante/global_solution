@@ -1,5 +1,7 @@
 package br.com.fiap.dto;
 
+import br.com.fiap.entity.SugestoesSaude;
+
 import java.time.LocalDate;
 
 public class SugestoesSaudeDto {
@@ -14,6 +16,13 @@ public class SugestoesSaudeDto {
 		this.sugestao = sugestao;
 		this.dtSugestao = dtSugestao;
 		this.usuarioId = usuarioId;
+	}
+
+	public SugestoesSaudeDto(SugestoesSaude sugestoesSaude) {
+		this.id = sugestoesSaude.getId();
+		this.sugestao = sugestoesSaude.getSugestao();
+		this.dtSugestao = sugestoesSaude.getDtSugestao();
+		this.usuarioId = sugestoesSaude.getUsuario().getId();
 	}
 
 	public SugestoesSaudeDto() {

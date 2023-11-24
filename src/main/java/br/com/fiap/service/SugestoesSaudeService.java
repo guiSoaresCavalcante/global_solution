@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.dto.SugestoesSaudeDto;
@@ -22,9 +24,8 @@ public class SugestoesSaudeService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 
-	public List<SugestoesSaudeDto> getAllSugestoesSaude() {
-		List<SugestoesSaude> sugestoesSaudeList = sugestoesSaudeRepository.findAll();
-		return sugestoesSaudeList.stream().map(this::convertToDto).collect(Collectors.toList());
+	public Page<SugestoesSaudeDto> getAllSugestoesSaude(Pageable pageable) {
+		return sugestoesSaudeRepository.findAll(pageable).map(SugestoesSaudeDto::new);
 	}
 
 	public SugestoesSaudeDto getSugestoesSaudeById(Long id) {

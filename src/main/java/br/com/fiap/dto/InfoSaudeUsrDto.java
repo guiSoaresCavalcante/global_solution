@@ -1,5 +1,7 @@
 package br.com.fiap.dto;
 
+import br.com.fiap.entity.InfoSaudeUsr;
+
 public class InfoSaudeUsrDto {
 
 	private Long id;
@@ -19,6 +21,14 @@ public class InfoSaudeUsrDto {
 		this.alimentacao = alimentacao;
 		this.horasSono = horasSono;
 		this.usuarioId = usuarioId;
+	}
+
+	public InfoSaudeUsrDto(InfoSaudeUsr infoSaudeUsr) {
+		this.id = infoSaudeUsr.getId();
+		this.habitosSaude = infoSaudeUsr.getHabitosSaude();
+		this.alimentacao = infoSaudeUsr.getAlimentacao();
+		this.horasSono = infoSaudeUsr.getHorasSono();
+		this.usuarioId = infoSaudeUsr.getId();
 	}
 
 	public Long getId() {
