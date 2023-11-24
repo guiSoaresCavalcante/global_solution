@@ -5,6 +5,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.dto.AtualizarUsuarioDto;
@@ -14,7 +17,7 @@ import br.com.fiap.entity.UsuarioEntity;
 import br.com.fiap.repository.UsuarioRepository;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
 
 	@Autowired
 	private UsuarioRepository repository;
@@ -89,4 +92,11 @@ public class UsuarioService {
 		return new ListarUsuarioDto(entity.getId(), entity.getNome(), entity.getEmail(),entity.getDataCadastro());
 	}
 
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Optional<UsuarioEntity> usuario = repository.findByEmail(username);
+		return usuario
+				.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+	}
 }

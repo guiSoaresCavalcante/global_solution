@@ -15,7 +15,7 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
 
     Page<UsuarioEntity> findAllByAtivoTrue(Pageable paginacao);
-    UsuarioEntity findByEmail(String email);
+    Optional<UsuarioEntity> findByEmail(String email);
     Optional<UsuarioEntity> findByEmailAndSenha(String email, String senha);
     Optional<UsuarioEntity> findById(Long id);
     List<UsuarioEntity> findAll();
