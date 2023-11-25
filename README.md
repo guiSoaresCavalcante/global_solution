@@ -35,7 +35,7 @@
 - Um exemplo de json utilizado nos testes
   
 ```
-Cadastrar Usuário
+Cadastrar Usuário "baseURL"/api/usuarios/cadastrar
 {
   "nome": "Alberto",
   "email": "alberto@gmail.com",
@@ -43,21 +43,21 @@ Cadastrar Usuário
   "role": "USER"
 }
 
-Login
+Login Usuário "baseURL" /api/usuarios/login
 {
   "email": "alberto@gmail.com",
-  "senha": "s0LY037PUwn2"
+  "senha": "s0LY037PUwn2",
 }
 
-Atualizar Usuário
+Atualizar Usuário "baseURL"/api/usuarios/1
 {
-  "id": 0,
+  "id": 1,
   "nome": "Alberto",
   "email": "alberto@gmail.com",
 }
 
 
-Login Usuário
+Login Usuário "baseURL"/api/usuarios/login
 {
   "nome": "Alberto",
   "email": "alberto@gmail.com",
@@ -65,7 +65,7 @@ Login Usuário
 }
 
 
-Cadastar Atualização Saúde
+Cadastar Atualização Saúde "baseURL"/api/atualizacoes-saude-pub
 
 {
   "titulo": "Janeiro Branco - sinal de alerta para a saúde mental ",
@@ -73,7 +73,17 @@ Cadastar Atualização Saúde
   "dtInfoSaude": "2024-01-01"
 }
 
-Update Atualização Saúde
+Update Atualização Saúde "baseURL"/api/atualizacoes-saude-pub/2
+
+{
+  "id": 2,
+  "titulo": "Outubro Rosa: campanha de saúde sobre o câncer de mama",
+  "descricao": "Com a chegada do mês de outubro, tem início mais uma edição da campanha Outubro Rosa, que tem o objetivo de conscientizar à prevenção, diagnóstico precoce do câncer de mama. ",
+  "dtInfoSaude": "2024-10-01"
+}
+
+
+Delete Atualização Saúde "baseURL"/api/atualizacoes-saude-pub/2
 
 {
   "id": 2,
@@ -91,6 +101,7 @@ mvn clean package
 
 ```
 - Atalho Docker Compose, executando um "stop", caso tenha feito um "start" anterior & mostrando nome e porta que esta rodando.
+- Extra [Link do video da aplicação Mobile](https://drive.google.com/file/d/1CzgH3VgIX1sij66K4sAc7_AglflAehjG/view)
 ```
 sudo docker-compose down && sudo docker-compose up -d --build && sudo docker-compose ps
 
