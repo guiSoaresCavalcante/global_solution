@@ -29,7 +29,7 @@
 
 [Link do Swagger da aplicação](https://spring-fiap.azurewebsites.net/swagger-ui/index.html)
 
-![alt text](./imgs/1.png)
+![alt text](./1.png)
 
 
 - Um exemplo de json utilizado nos testes
