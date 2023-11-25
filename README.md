@@ -29,15 +29,8 @@
 
 [Link do Swagger da aplicação](https://spring-fiap.azurewebsites.net/swagger-ui/index.html)
 
-
-- abaixo algumas fotos realizando um solicitação HTTP do tipo **POST** & **GET**.
-
-![alt text](./imgs/2.png)
 ![alt text](./imgs/1.png)
-![alt text](./imgs/3.png)
-![alt text](./imgs/4.png)
-![alt text](./imgs/5.png)
-![alt text](./imgs/6.png)
+
 
 - Um exemplo de json utilizado nos testes
   
@@ -45,6 +38,13 @@
 Cadastrar Usuário
 {
   "nome": "Alberto",
+  "email": "alberto@gmail.com",
+  "senha": "s0LY037PUwn2",
+  "role": "USER"
+}
+
+Login
+{
   "email": "alberto@gmail.com",
   "senha": "s0LY037PUwn2"
 }
