@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.dto.AtualizarUsuarioDto;
@@ -22,12 +24,9 @@ public class UsuarioService implements UserDetailsService {
 	@Autowired
 	private UsuarioRepository repository;
 
-	public Long cadastrar(CadastroUsuarioDto usuarioDto) {
-		if (repository.findByEmail(usuarioDto.email()) != null) {
-			throw new IllegalArgumentException("Email já cadastrado");
-		}
-		UsuarioEntity usuarioEntity = repository.save(new UsuarioEntity(usuarioDto));
-		return usuarioEntity.getId();
+
+	public void cadastrar(UsuarioEntity usuario) {
+		repository.save(usuario);
 	}
 
 //    public Page<ListarUsuarioDto> listar(Pageable paginacao) {

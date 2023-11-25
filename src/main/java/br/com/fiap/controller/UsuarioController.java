@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.fiap.dto.*;
+import br.com.fiap.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,12 +24,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fiap.dto.AtualizarUsuarioDto;
-import br.com.fiap.dto.CadastroUsuarioDto;
-import br.com.fiap.dto.ListarUsuarioDto;
 import br.com.fiap.entity.UsuarioEntity;
 import br.com.fiap.service.UsuarioService;
 import jakarta.validation.Valid;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -32,29 +36,28 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService service;
+	@Autowired
+	private JwtService jwtService;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@PostMapping("/cadastrar")
 	@Transactional
-	public ResponseEntity<?> cadastrar(@RequestBody @Valid CadastroUsuarioDto usuario) {
-		try {
-			Long id = service.cadastrar(usuario);
-			return ResponseEntity.ok(id);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public ResponseEntity cadastrar(@RequestBody @Valid CadastroUsuarioDto dados, UriComponentsBuilder uriBuilder) {
+		UsuarioEntity usuarioEntity = new UsuarioEntity(dados);
+		service.cadastrar(usuarioEntity);
+
+		var uri = uriBuilder.path("usuario{id}").buildAndExpand(usuarioEntity.getId()).toUri();
+		return ResponseEntity.created(uri).body(new UsuarioCriadoDto(usuarioEntity));
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody CadastroUsuarioDto loginRequest) {
-		String email = loginRequest.email();
-		String senha = loginRequest.senha();
-
-		Optional<UsuarioEntity> usuario = service.findByEmailSenha(email, senha);
-
-		if (usuario.isPresent()) {
-			return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
+	public String login(@RequestBody LoginDto loginRequest) {
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.senha()));
+		if (authentication.isAuthenticated()) {
+			return jwtService.generateToken(loginRequest.email());
 		} else {
-			return new ResponseEntity<>("Credenciais inválidas", HttpStatus.UNAUTHORIZED);
+			throw new UsernameNotFoundException("Email ou senha invalidos");
 		}
 	}
 
