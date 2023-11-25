@@ -27,7 +27,7 @@ public class SugestoesSaudeController {
 	public SugestoesSaudeController(SugestoesSaudeService sugestoesSaudeService) {
 		this.sugestoesSaudeService = sugestoesSaudeService;
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<Page<SugestoesSaudeDto>> getAllSugestoesSaude(Pageable pageable) {
 		return ResponseEntity.ok(sugestoesSaudeService.getAllSugestoesSaude(pageable));

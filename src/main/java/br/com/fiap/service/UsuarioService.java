@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.dto.AtualizarUsuarioDto;
@@ -17,17 +15,13 @@ import br.com.fiap.entity.UsuarioEntity;
 import br.com.fiap.repository.UsuarioRepository;
 
 @Service
-public class UsuarioService implements UserDetailsService {
+public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
 
-	public Long cadastrar(CadastroUsuarioDto usuarioDto) {
-		if (repository.findByEmail(usuarioDto.email()) != null) {
-			throw new IllegalArgumentException("Email já cadastrado");
-		}
-		UsuarioEntity usuarioEntity = repository.save(new UsuarioEntity(usuarioDto));
-		return usuarioEntity.getId();
+	public void cadastrar(UsuarioEntity usuario) {
+		repository.save(usuario);
 	}
 
 //    public Page<ListarUsuarioDto> listar(Pageable paginacao) {
@@ -92,11 +86,5 @@ public class UsuarioService implements UserDetailsService {
 		return new ListarUsuarioDto(entity.getId(), entity.getNome(), entity.getEmail(),entity.getDataCadastro());
 	}
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<UsuarioEntity> usuario = repository.findByEmail(username);
-		return usuario
-				.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
-	}
 }

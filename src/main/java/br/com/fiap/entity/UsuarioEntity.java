@@ -1,7 +1,6 @@
 package br.com.fiap.entity;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -21,15 +20,12 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "USUARIO")
 @Getter
 @Setter
-public class UsuarioEntity implements UserDetails {
+public class UsuarioEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -71,19 +67,16 @@ public class UsuarioEntity implements UserDetails {
 	@JoinTable(name = "USUARIO_ATUALIZACAO_SAUDE_PUB", joinColumns = @JoinColumn(name = "ID_USUARIO"), inverseJoinColumns = @JoinColumn(name = "ID_ATUALIZACAO_SAUDE_PUB"))
 	private Set<AtualizacaoSaudePub> atualizacoesSaudePub;
 
-	private UserRole role;
-
 	public UsuarioEntity(CadastroUsuarioDto dados) {
 		this.ativo = true;
 		this.nome = dados.nome();
 		this.email = dados.email();
 		this.senha = dados.senha();
 		this.dataCadastro = LocalDate.now();
-		this.role = dados.role();
 	}
 
 	public UsuarioEntity(Long id, String nome, String sobrenome, String email, String senha, LocalDate dataCadastro,
-			boolean ativo) {
+						 boolean ativo) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -123,12 +116,7 @@ public class UsuarioEntity implements UserDetails {
 		this.sobrenome = sobrenome;
 	}
 
-	@Override
-	public String getUsername() {
-		return email;
-	}
-
-	public String getEmal() {
+	public String getEmail() {
 		return email;
 	}
 
@@ -158,40 +146,6 @@ public class UsuarioEntity implements UserDetails {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		if (this.role == UserRole.ADMIN) {
-			return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-		} else {
-			return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-		}
-	}
-
-	@Override
-	public String getPassword() {
-		return senha;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
 	}
 
 }

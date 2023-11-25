@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.fiap.dto.UsuarioCriadoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import br.com.fiap.dto.ListarUsuarioDto;
 import br.com.fiap.entity.UsuarioEntity;
 import br.com.fiap.service.UsuarioService;
 import jakarta.validation.Valid;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -35,13 +37,14 @@ public class UsuarioController {
 
 	@PostMapping("/cadastrar")
 	@Transactional
-	public ResponseEntity<?> cadastrar(@RequestBody @Valid CadastroUsuarioDto usuario) {
-		try {
-			Long id = service.cadastrar(usuario);
-			return ResponseEntity.ok(id);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public ResponseEntity<?> cadastrar(@RequestBody @Valid CadastroUsuarioDto usuario, UriComponentsBuilder uriBuilder) {
+
+
+		UsuarioEntity usuarioEntity = new UsuarioEntity(usuario);
+		service.cadastrar(usuarioEntity);
+
+		var uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuarioEntity.getId()).toUri();
+		return ResponseEntity.created(uri).body(new UsuarioCriadoDto(usuarioEntity));
 	}
 
 	@PostMapping("/login")
